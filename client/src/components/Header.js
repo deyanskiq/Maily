@@ -5,7 +5,14 @@ import React, {
 class Header extends Component {
   render() {
     return (
-      <div>Header</div>
+      <nav>
+        <div className="nav-wrapper">
+          <a href="#" className="left brand-logo">Maily</a>
+          <ul id="nav-mobile" className="right hide-on-med-and-down">
+            <li><a href="#">Login With Google</a></li>
+          </ul>
+        </div>
+    </nav>
       )
   }
 }

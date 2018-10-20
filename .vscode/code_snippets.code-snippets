@@ -52,7 +52,7 @@
 			"render() {",
 				"return (",
 				"\t$0",
-				")",
+			")",
 			"}"
 		],
 		"description": "return"
@@ -78,13 +78,22 @@
 		],
 		"description": "react, component"
 	},
-	"CC": {
+	"Class component": {
 		"prefix": "CC",
 		"body": [
 			"class ${2:element} extends Component {",
 			"\t$0",
 			"}"
 		],
-		"description": "react"
+		"description": "Class component"
 	},
+	"functional component": {
+		"prefix": "FC",
+		"body": [
+			"const ${2:element} = () => {",
+		"\t$0",
+		"}"
+	],
+	"description": "functional component"
+},
 }
