@@ -3,16 +3,12 @@ import { reduxForm, Field } from 'redux-form'
 import SurveyField from './SurveyField'
 import _ from 'lodash'
 import { Link } from 'react-router-dom'
+import validateEmails from '../../utils/validateEmails'
+import formFields from './formFields'
 
-const FIELDS = [
-  { label: 'Survey Title', name: 'title', noValueError: 'Provide a survey name'},
-  { label: 'Subject Line', name: 'subject', noValueError: 'Provide a survey subject'},
-  { label: 'Email Body', name: 'body', noValueError: 'Provide a email body'},
-  { label : 'Recipient List', name: 'emails', noValueError: 'Provide emails'}
-]
 class SurveyForm extends Component {
   renderFields() {
-    return _.map(FIELDS, ({ label, name }) => {
+    return _.map(formFields, ({ label, name }) => {
       return (
       <Field key={name} type="text" component={SurveyField} label={label} name={name} />
       )
@@ -22,7 +18,7 @@ class SurveyForm extends Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.props.handleSubmit(values => console.log(values))}
+        <form onSubmit={this.props.handleSubmit(this.props.onSurveySubmit)}
         >
         {this.renderFields()}
         <Link to="/surveys" className="red btn-flat white-text">
@@ -41,15 +37,19 @@ class SurveyForm extends Component {
 function validate(values){
   const errors = {}
 
-  _.each(FIELDS, ({ name, noValueError }) => {
+  errors.recipients = validateEmails(values.recipients || '')
+
+  _.each(formFields, ({ name, noValueError }) => {
     if(!values[name]) {
       errors[name] = noValueError
     }
   })
-  return errors
 
+  return errors
 }
+// surveyForm is unique name for the form because we can have many form in our app
 export default reduxForm({
   validate: validate,
-  form: 'surveyForm'
+  form: 'surveyForm',
+  destroyOnUnmount: false
 })(SurveyForm)
